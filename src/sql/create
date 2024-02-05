@@ -1,0 +1,37 @@
+CREATE TABLE "customer" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(255),
+  "email" VARCHAR(255),
+  "phone" VARCHAR(20),
+  "gender" VARCHAR(10),
+  "birth" DATE,
+  "cpf" VARCHAR(20),
+  "address" VARCHAR(255),
+  "created_at" TIMESTAMP
+);
+
+CREATE TABLE "vehicle" (
+  "id" SERIAL PRIMARY KEY,
+  "customer_id" INTEGER REFERENCES "customer" ("id"),
+  "type" VARCHAR(255),
+  "plate" VARCHAR(20),
+  "brand" VARCHAR(255),
+  "model" VARCHAR(255),
+  "year_of_manufacture" INTEGER,
+  "color" VARCHAR(50),
+  "current_mileage" INTEGER,
+  "last_revision" DATE,
+  "created_at" TIMESTAMP
+);
+
+CREATE TABLE "revision_to_do" (
+  "id" SERIAL PRIMARY KEY,
+  "vehicle_id" INTEGER REFERENCES "vehicle" ("id"),
+  "type" VARCHAR(255),
+  "concluded" BOOLEAN,
+  "created_at" TIMESTAMP
+);
+
+ALTER TABLE "vehicle" ADD FOREIGN KEY ("customer_id") REFERENCES "customer" ("id");
+
+ALTER TABLE "revision_to_do" ADD FOREIGN KEY ("vehicle_id") REFERENCES "vehicle" ("id");
